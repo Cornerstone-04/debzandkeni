@@ -4,6 +4,10 @@ import { StarField } from "./star-field";
 import { SceneOne } from "./scene-one";
 import { SceneTwo } from "./scene-two";
 import { SceneThree } from "./scene-three";
+import { SceneFour } from "./scene-four";
+import { SceneFive } from "./scene-five";
+import { SceneSix } from "./scene-six";
+import { SceneSeven } from "./scene-seven";
 
 export function TimelinePage() {
   return (
@@ -20,13 +24,17 @@ export function TimelinePage() {
       {/* Scene 3: Love In Motion — Feb–May 2026 */}
       <SceneThree />
 
-      {/*
-        Scenes 4–7 will be added in future sessions.
-        4: The Test That Changed Everything (June 1, 2026)
-        5: The Future Doubled (twins reveal)
-        6: Countdown to January
-        7: The Beginning Of Everything
-      */}
+      {/* Scene 4: The Test That Changed Everything — June 1, 2026 */}
+      <SceneFour />
+
+      {/* Scene 5: The Future Doubled — June 2026 */}
+      <SceneFive />
+
+      {/* Scene 6: Countdown To January — June 2026 → January 2027 */}
+      <SceneSix />
+
+      {/* Scene 7: The Beginning Of Everything — January 2027 */}
+      <SceneSeven />
     </main>
   );
 }
