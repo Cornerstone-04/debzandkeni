@@ -2,12 +2,12 @@
 
 :root {
   --night: #05060f;
+  --champagne: #f5e6c8;
   --deep-space: #080b1a;
   --midnight: #0c1228;
   --star-glow: #e8d5b0;
   --warm-gold: #d4a853;
   --soft-gold: #f0c97a;
-  --champagne: #f5e6c8;
   --rose-warm: #e8957a;
   --sky-deep: #1a2744;
   --nebula-purple: #2d1b4e;
@@ -18,8 +18,36 @@
   --glow-gold: rgba(212, 168, 83, 0.15);
 }
 
-* {
+@theme inline {
+  --color-background: var(--night);
+  --color-foreground: var(--champagne);
+  --color-deep-space: var(--deep-space);
+  --color-midnight: var(--midnight);
+  --color-star-glow: var(--star-glow);
+  --color-warm-gold: var(--warm-gold);
+  --color-soft-gold: var(--soft-gold);
+  --color-rose-warm: var(--rose-warm);
+  --color-sky-deep: var(--sky-deep);
+  --color-nebula-purple: var(--nebula-purple);
+  --color-firework-pink: var(--firework-pink);
+  --color-firework-gold: var(--firework-gold);
+  --color-firework-blue: var(--firework-blue);
+  --color-timeline-line: var(--timeline-line);
+  --color-glow-gold: var(--glow-gold);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-cormorant: var(--font-cormorant-garamond);
+  --font-jost: var(--font-jost);
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+* {
   margin: 0;
   padding: 0;
 }
@@ -29,7 +57,10 @@ html {
 }
 
 body {
-  @apply bg-night text-champagne font-cormorant overflow-x-hidden;
+  background: var(--night);
+  color: var(--champagne);
+  font-family: var(--font-cormorant-garamond), serif;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -48,4 +79,16 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--warm-gold);
   border-radius: 2px;
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
 }

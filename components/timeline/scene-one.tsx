@@ -72,14 +72,8 @@ export function SceneOne() {
     <div ref={containerRef} style={{ height: "400vh", position: "relative" }}>
       {/* Sticky inner: stays in viewport while user scrolls through the outer height */}
       <div
-        style={{
-          position: "sticky",
-          top: 0,
-          height: "100vh",
-          overflow: "hidden",
-          background: bgColor,
-          transition: "background 0.3s ease",
-        }}
+        style={{ background: bgColor }}
+        className={`sticky top-0 h-screen overflow-hidden transition-all ease-linear duration-300`}
       >
         {/* ── LAYER 1: Atmospheric nebula (slowest parallax) ── */}
         <div
@@ -90,52 +84,24 @@ export function SceneOne() {
           }}
         >
           {/* Subtle nebula blobs */}
-          <div
-            className="absolute"
-            style={{
-              top: "10%",
-              left: "5%",
-              width: "40vw",
-              height: "40vw",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle, rgba(45,27,78,0.35) 0%, transparent 70%)",
-              filter: "blur(60px)",
-            }}
-          />
-          <div
-            className="absolute"
-            style={{
-              top: "20%",
-              right: "8%",
-              width: "35vw",
-              height: "35vw",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle, rgba(26,39,68,0.4) 0%, transparent 70%)",
-              filter: "blur(50px)",
-            }}
-          />
+          <div className="absolute top-[10%] left-[5%] rounded-[50%] w-[40vw] h-[40vw] bg-[radial-gradient(circle_at_center,rgba(45,27,78,0.35)_0%,transparent_70%)] blur-[60px]" />
+          <div className="absolute pointer-events-none top-[20%] right-[8%] blur-[50px] w-[35vw] h-[35vw] rounded-[50%] bg-[radial-gradient(circle_at_center,rgba(26,39,68,0.4)_0%,transparent_70%)]" />
+
           {/* Warm horizon glow — grows as progress increases */}
           <div
-            className="absolute bottom-0 left-0 right-0"
+            className={`absolute bottom-0 left-0 right-0 h-[70vh] transition-none`}
             style={{
-              height: "35vh",
               background: `radial-gradient(ellipse at 50% 100%, rgba(212,168,83,${
                 0.04 + progress * 0.12
               }) 0%, transparent 70%)`,
-              transition: "none",
             }}
           />
         </div>
 
         {/* ── LAYER 2: Cloud / particle atmosphere (medium parallax) ── */}
         <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            transform: `translateY(${cloudOffset}px)`,
-            zIndex: 2,
-          }}
+          className="absolute inset-0 pointer-events-none z-2"
+          style={{ transform: `translateY(${cloudOffset}px)` }}
         >
           <svg
             className="absolute w-full h-full"
@@ -177,38 +143,23 @@ export function SceneOne() {
 
         {/* ── LAYER 3: Timeline path line ── */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none z-3 bottom-0 w-0.5 transition-none"
           style={{
-            zIndex: 3,
-            bottom: 0,
-            width: "2px",
             height: `${20 + progress * 30}vh`,
             background:
               "linear-gradient(to top, rgba(212,168,83,0.6), transparent)",
-            transition: "none",
           }}
         />
 
         {/* ── LAYER 4: Characters ── */}
-        <div
-          className="absolute w-full pointer-events-none"
-          style={{
-            zIndex: 4,
-            bottom: "12vh",
-          }}
-        >
+        <div className="absolute w-full pointer-events-none bottom-[12vh] z-4">
           <CharacterPair progress={charProgress} />
         </div>
 
         {/* ── LAYER 5: Clock ── */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
-          style={{
-            zIndex: 5,
-            top: "18vh",
-            opacity: showCountdown ? 1 : 0,
-            transition: "opacity 0.8s ease",
-          }}
+          style={{ opacity: showCountdown ? 1 : 0 }}
+          className="absolute left-1/2 top-[18vh] -translate-x-1/2 pointer-events-none z-5 transition-opacity duration-800 ease-linear"
         >
           <CountdownClock progress={clockProgress} />
         </div>
@@ -217,168 +168,55 @@ export function SceneOne() {
 
         {/* Opening chapter label */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none"
-          style={{
-            zIndex: 6,
-            top: "10vh",
-            opacity: showOpeningText ? 1 : 0,
-            transition: "opacity 1s ease",
-            width: "90vw",
-          }}
+          style={{ opacity: showOpeningText ? 1 : 0 }}
+          className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none z-6 top-[30vh] transition-opacity duration-1000 ease-linear w-[90vw] flex flex-col gap-2.5 items-center"
         >
-          <p
-            style={{
-              fontFamily: "var(--font-jost)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.4em",
-              color: "var(--warm-gold)",
-              textTransform: "uppercase",
-              opacity: 0.7,
-              marginBottom: "8px",
-            }}
-          >
+          <p className="font-jost tracking-widest text-warm-gold uppercase mb-2 opacity-70">
             Chapter I
           </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(1.8rem, 4vw, 3rem)",
-              fontWeight: 300,
-              color: "var(--champagne)",
-              letterSpacing: "0.05em",
-              lineHeight: 1.2,
-            }}
-          >
+          <h2 className="leading-[1.2] font-cormorant font-bold tracking-wide text-[clamp(1.8rem,4vw,4rem)] text-foreground">
             {event.chapter}
           </h2>
-          <div
-            style={{
-              width: "60px",
-              height: "1px",
-              background: "var(--warm-gold)",
-              margin: "14px auto",
-              opacity: 0.5,
-            }}
-          />
-          <p
-            style={{
-              fontFamily: "var(--font-jost)",
-              fontSize: "0.8rem",
-              letterSpacing: "0.15em",
-              color: "var(--champagne)",
-              opacity: 0.45,
-              textTransform: "uppercase",
-            }}
-          >
+          {/* <div className="w-15 h-px bg-warm-gold my-3.5 mx-auto opacity-50" /> */}
+          <p className="font-jost tracking-widest text-foreground uppercase opacity-45">
             Scroll to begin
           </p>
         </div>
 
         {/* Meeting moment text */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none"
+          className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none z-6 top-[30vh] transition-all duration-900 ease-linear w-[min(600px,88vw)]"
           style={{
-            zIndex: 6,
-            top: "10vh",
-            width: "min(600px, 88vw)",
             opacity: showMeetText ? 1 : 0,
             transform: `translateY(${showMeetText ? 0 : 12}px)`,
-            transition: "opacity 0.9s ease, transform 0.9s ease",
           }}
         >
-          <p
-            style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)",
-              fontStyle: "italic",
-              fontWeight: 300,
-              color: "var(--champagne)",
-              letterSpacing: "0.04em",
-              lineHeight: 1.6,
-              opacity: 0.85,
-            }}
-          >
-            {event.title} — and of all the rooms in the city —
+          <p className="font-cormorant text-[clamp(1.2rem,2.5vw,3rem)] italic font-light text-foreground tracking-[0.04em] leading-[1.6] opacity-85">
+            {event.title}
           </p>
         </div>
 
         {/* Midnight reveal text */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none"
+          className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none z-6 top-[30vh] transition-all duration-1200 ease-linear w-[min(700px,90vw)]"
           style={{
-            zIndex: 6,
-            top: "8vh",
-            width: "min(700px, 90vw)",
             opacity: showRevealText ? 1 : 0,
             transform: `translateY(${showRevealText ? 0 : 16}px)`,
-            transition: "opacity 1.2s ease 0.2s, transform 1.2s ease 0.2s",
           }}
         >
-          <p
-            style={{
-              fontFamily: "var(--font-jost)",
-              fontSize: "0.6rem",
-              letterSpacing: "0.35em",
-              color: "var(--warm-gold)",
-              textTransform: "uppercase",
-              marginBottom: "16px",
-              opacity: 0.8,
-            }}
-          >
-            {event.date} — Midnight
+          <p className="font-jost font-semibold text-[0.6rem] tracking-[0.35em] text-warm-gold uppercase mb-4 opacity-80">
+            {event.date}
           </p>
-          <h3
-            style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)",
-              fontWeight: 300,
-              color: "var(--champagne)",
-              letterSpacing: "0.04em",
-              lineHeight: 1.3,
-              marginBottom: "20px",
-            }}
-          >
+
+          <h3 className="font-cormorant text-[clamp(1.6rem,3.5vw,2.6rem)] font-light text-foreground tracking-[0.04em] leading-[1.3] mb-5">
             {event.description}
           </h3>
-          <div
-            style={{
-              width: "40px",
-              height: "1px",
-              background: "var(--warm-gold)",
-              margin: "0 auto",
-              opacity: 0.6,
-            }}
-          />
+
+          {/* <div className="w-10 h-px bg-warm-gold mx-auto opacity-60" /> */}
         </div>
 
         {/* Fireworks canvas */}
         <Fireworks active={showFireworks} />
-
-        {/* Scroll indicator — only at very start */}
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
-          style={{
-            zIndex: 7,
-            opacity: progress < 0.05 ? 0.5 : 0,
-            transition: "opacity 0.6s ease",
-          }}
-        >
-          <div
-            style={{
-              width: "1px",
-              height: "40px",
-              background:
-                "linear-gradient(to bottom, transparent, var(--warm-gold))",
-              animation: "scrollPulse 2s ease-in-out infinite",
-            }}
-          />
-          <style>{`
-            @keyframes scrollPulse {
-              0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
-              50% { opacity: 0.8; transform: scaleY(1); }
-            }
-          `}</style>
-        </div>
       </div>
     </div>
   );

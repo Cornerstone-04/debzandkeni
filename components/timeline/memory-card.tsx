@@ -44,18 +44,15 @@ export function MemoryCard({
 
   return (
     <div
+    className="absolute z-5 transition-none rounded-xl backdrop-blur-md px-4.5 py-3.5"
       style={{
-        position: "absolute",
         ...positionStyle,
         opacity: cardProgress,
         transform: translateMap[entryFrom],
-        transition: "none", // driven entirely by scroll, not CSS transitions
         zIndex: 5,
         // Glassmorphism card
         background: "rgba(12, 18, 40, 0.55)",
         border: "1px solid rgba(212, 168, 83, 0.2)",
-        borderRadius: "12px",
-        backdropFilter: "blur(12px)",
         padding: "14px 18px",
         minWidth: "140px",
         maxWidth: "180px",
