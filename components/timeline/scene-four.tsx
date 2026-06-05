@@ -127,11 +127,13 @@ export function SceneFour() {
           }}
         >
           <div
-            className="relative h-[74px] w-[min(76vw,360px)] rounded-full"
+            className="relative h-[74px] w-[min(76vw,360px)] rounded-full sci-panel"
             style={{
               background: "linear-gradient(100deg, rgba(245,230,200,0.92), rgba(232,213,176,0.78))",
-              border: "1px solid rgba(255,255,255,0.28)",
-              boxShadow: `0 16px 70px rgba(0,0,0,0.42), 0 0 ${42 + pulse * 34}px rgba(232,149,122,0.28)`,
+              border: "1px solid rgba(154,223,255,0.24)",
+              boxShadow: `0 16px 70px rgba(0,0,0,0.42), 0 0 ${42 + pulse * 34}px rgba(232,149,122,0.22), 0 0 ${
+                22 + pulse * 22
+              }px rgba(103,243,255,0.08)`,
             }}
           >
             <div

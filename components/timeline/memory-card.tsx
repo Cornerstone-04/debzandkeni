@@ -51,21 +51,33 @@ export function MemoryCard({
 
   return (
     <div
-      className="absolute z-5 transition-none rounded-xl backdrop-blur-md px-4.5 py-3.5"
+      className="absolute z-5 transition-none rounded-xl backdrop-blur-md px-4.5 py-3.5 sci-panel"
       style={{
         opacity: cardProgress * exitProgress,
         transform: `${positionTransform ?? ""} ${translateMap[entryFrom]}`.trim(),
         zIndex: 5,
-        // Glassmorphism card
-        background: "rgba(12, 18, 40, 0.55)",
-        border: "1px solid rgba(212, 168, 83, 0.2)",
+        background:
+          "linear-gradient(145deg, rgba(8,13,30,0.78), rgba(12,18,40,0.58) 62%, rgba(13,28,46,0.5))",
+        border: "1px solid rgba(154, 223, 255, 0.22)",
         padding: "18px 22px",
         minWidth: "180px",
         maxWidth: "240px",
-        boxShadow: "0 8px 34px rgba(0,0,0,0.42), inset 0 1px 0 rgba(212,168,83,0.1)",
+        boxShadow:
+          "0 8px 34px rgba(0,0,0,0.42), 0 0 24px rgba(103,243,255,0.08), inset 0 1px 0 rgba(245,230,200,0.12)",
         ...positionRest,
       }}
     >
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <p className="system-label">Memory node</p>
+        <div
+          style={{
+            width: 28,
+            height: 1,
+            background: "linear-gradient(90deg, rgba(154,223,255,0.58), transparent)",
+          }}
+        />
+      </div>
+
       {/* Icon */}
       <div style={{ fontSize: "1.7rem", marginBottom: "8px" }}>{icon}</div>
 
@@ -76,7 +88,7 @@ export function MemoryCard({
           fontSize: "0.66rem",
           fontWeight: 700,
           letterSpacing: "0.22em",
-          color: "var(--warm-gold)",
+          color: "rgba(240,201,122,0.88)",
           textTransform: "uppercase",
           opacity: 0.82,
           marginBottom: "6px",
@@ -108,9 +120,21 @@ export function MemoryCard({
           left: 0,
           width: "20px",
           height: "20px",
-          borderTop: "1px solid rgba(212,168,83,0.4)",
-          borderLeft: "1px solid rgba(212,168,83,0.4)",
+          borderTop: "1px solid rgba(154,223,255,0.48)",
+          borderLeft: "1px solid rgba(154,223,255,0.48)",
           borderTopLeftRadius: "12px",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+          width: "34px",
+          height: "22px",
+          borderRight: "1px solid rgba(212,168,83,0.34)",
+          borderBottom: "1px solid rgba(212,168,83,0.34)",
+          borderBottomRightRadius: "12px",
         }}
       />
     </div>

@@ -49,15 +49,26 @@ export function CountdownToArrival({
 
   return (
     <div
-      className="relative w-[min(92vw,620px)] rounded-[24px] px-6 py-8 text-center backdrop-blur-md md:px-8 md:py-9"
+      className="relative w-[min(92vw,620px)] rounded-[24px] px-6 py-8 text-center backdrop-blur-md sci-panel md:px-8 md:py-9"
       style={{
-        background: "rgba(12,18,40,0.56)",
-        border: "1px solid rgba(212,168,83,0.24)",
+        background:
+          "linear-gradient(145deg, rgba(8,13,30,0.78), rgba(12,18,40,0.58) 58%, rgba(13,28,46,0.48))",
+        border: "1px solid rgba(154,223,255,0.24)",
         boxShadow: `0 12px 60px rgba(0,0,0,0.35), 0 0 ${
-          36 + glowProgress * 60
-        }px rgba(212,168,83,${0.08 + glowProgress * 0.14})`,
+          32 + glowProgress * 52
+        }px rgba(103,243,255,${0.06 + glowProgress * 0.12}), 0 0 ${28 + glowProgress * 38}px rgba(212,168,83,0.1)`,
       }}
     >
+      <div className="mb-4 flex items-center justify-center gap-3">
+        <span className="system-label">Arrival sequence</span>
+        <span
+          style={{
+            height: 1,
+            width: 44,
+            background: "linear-gradient(90deg, rgba(154,223,255,0.62), transparent)",
+          }}
+        />
+      </div>
       <p
         className="font-jost uppercase"
         style={{
@@ -82,8 +93,9 @@ export function CountdownToArrival({
             key={item.label}
             className="rounded-xl px-3 py-5 md:px-4 md:py-6"
             style={{
-              background: "rgba(245,230,200,0.055)",
-              border: "1px solid rgba(245,230,200,0.08)",
+              background: "rgba(154,223,255,0.055)",
+              border: "1px solid rgba(154,223,255,0.13)",
+              boxShadow: "inset 0 1px 0 rgba(245,230,200,0.08)",
             }}
           >
             <p

@@ -24,14 +24,16 @@ export function TwinReveal({ progress }: TwinRevealProps) {
       aria-hidden="true"
     >
       <div
-        className="relative aspect-[4/3] w-[min(88vw,390px)] overflow-hidden rounded-[20px] md:w-[min(78vw,500px)] md:rounded-[24px]"
+        className="relative aspect-[4/3] w-[min(88vw,390px)] overflow-hidden rounded-[20px] sci-panel md:w-[min(78vw,500px)] md:rounded-[24px]"
         style={{
           transform: `scale(${0.88 + reveal * 0.12})`,
           transformOrigin: "center",
           background:
-            "linear-gradient(145deg, rgba(245,230,200,0.1), rgba(12,18,40,0.72) 42%, rgba(8,11,26,0.92))",
-          border: "1px solid rgba(240,201,122,0.28)",
-          boxShadow: `0 0 ${isMobile ? 28 + reveal * 42 : 44 + reveal * 70}px rgba(212,168,83,${glow}), inset 0 1px 0 rgba(245,230,200,0.12)`,
+            "linear-gradient(145deg, rgba(154,223,255,0.12), rgba(12,18,40,0.74) 42%, rgba(8,11,26,0.94))",
+          border: "1px solid rgba(154,223,255,0.28)",
+          boxShadow: `0 0 ${isMobile ? 28 + reveal * 42 : 44 + reveal * 70}px rgba(103,243,255,${
+            glow * 0.72
+          }), 0 0 ${24 + reveal * 46}px rgba(212,168,83,0.12), inset 0 1px 0 rgba(245,230,200,0.12)`,
         }}
       >
         <svg viewBox="0 0 480 360" className="absolute inset-0 h-full w-full">
@@ -109,14 +111,14 @@ export function TwinReveal({ progress }: TwinRevealProps) {
         <div
           className="absolute left-3 right-3 top-3 flex items-center justify-between gap-3 font-jost uppercase md:left-4 md:right-4"
           style={{
-            color: "rgba(240,201,122,0.62)",
+            color: "rgba(154,223,255,0.68)",
             fontSize: isMobile ? "0.58rem" : "0.68rem",
             fontWeight: 700,
             letterSpacing: isMobile ? "0.16em" : "0.24em",
           }}
         >
           <span>June 2026</span>
-          <span style={{ textAlign: "right" }}>Two heartbeats</span>
+          <span style={{ color: "rgba(240,201,122,0.76)", textAlign: "right" }}>Two heartbeats</span>
         </div>
       </div>
     </div>

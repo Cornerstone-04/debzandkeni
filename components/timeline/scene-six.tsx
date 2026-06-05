@@ -2,12 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { journeyToJanuaryMilestones } from "@/data/timeline-events";
-import { useIsMobile } from "./use-is-mobile";
 
 export function SceneSix() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +30,8 @@ export function SceneSix() {
     journeyToJanuaryMilestones.length - 1,
     Math.floor(Math.max(0, progress - 0.12) / 0.12)
   );
+  const activeMilestone = journeyToJanuaryMilestones[activeIndex];
+  const activeVisible = Math.max(0, Math.min(1, (progress - 0.12) / 0.08));
 
   return (
     <div ref={containerRef} style={{ height: "620vh", position: "relative" }}>
@@ -140,43 +140,109 @@ export function SceneSix() {
         </div>
 
         <div
-          className="absolute left-1/2 top-[25vh] z-5 grid w-[min(90vw,410px)] -translate-x-1/2 gap-3 pointer-events-none md:top-[16vh] md:w-[min(94vw,1120px)] md:grid-cols-7"
+          className="absolute inset-0 z-5 hidden pointer-events-none md:block"
           style={{ opacity: showMilestones ? 1 : 0, transition: "opacity 0.8s ease" }}
         >
           {journeyToJanuaryMilestones.map((milestone, index) => {
-            const visible = Math.max(0, Math.min(1, (progress - (0.13 + index * 0.105)) / 0.08));
+            const t = index / (journeyToJanuaryMilestones.length - 1);
+            const reveal = Math.max(0, Math.min(1, (progress - (0.13 + index * 0.105)) / 0.08));
             const isActive = index === activeIndex;
-            const cardVisible = isMobile ? (isActive ? 1 : 0) : visible;
+            const pathY = index % 2 === 0 ? 68 - t * 36 - Math.sin(t * Math.PI) * 6 : 70 - t * 20;
+            const left = 16 + t * 68;
+            const opacity = isActive ? reveal : index < activeIndex ? 0.24 : 0;
 
             return (
               <article
                 key={milestone.id}
-                className="rounded-xl px-5 py-5 backdrop-blur-md md:px-4 md:py-4"
+                className="absolute rounded-[18px] px-5 py-4 text-left backdrop-blur-md sci-panel"
                 style={{
-                  display: isMobile && !isActive ? "none" : undefined,
-                  opacity: cardVisible,
-                  transform: `translateY(${18 - cardVisible * 18}px)`,
-                  background: isActive ? "rgba(12,18,40,0.68)" : "rgba(12,18,40,0.46)",
-                  border: `1px solid rgba(212,168,83,${isActive ? 0.34 : 0.16})`,
-                  boxShadow: isActive ? "0 10px 36px rgba(0,0,0,0.28), 0 0 28px rgba(212,168,83,0.12)" : "none",
-                  minHeight: isMobile ? "220px" : "190px",
+                  left: `${left}%`,
+                  top: `${pathY}%`,
+                  width: "min(24vw, 250px)",
+                  minWidth: "218px",
+                  opacity,
+                  transform: `translate(-50%, ${24 - reveal * 24}px) scale(${isActive ? 1 : 0.92})`,
+                  background:
+                    "linear-gradient(145deg, rgba(8,13,30,0.8), rgba(12,18,40,0.62), rgba(13,28,46,0.45))",
+                  border: `1px solid rgba(154,223,255,${isActive ? 0.32 : 0.14})`,
+                  boxShadow: isActive
+                    ? "0 14px 48px rgba(0,0,0,0.34), 0 0 32px rgba(103,243,255,0.12), 0 0 28px rgba(212,168,83,0.1)"
+                    : "0 8px 26px rgba(0,0,0,0.22)",
+                  transition: "opacity 0.45s ease, transform 0.45s ease",
                 }}
               >
-                <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", opacity: 0.82, marginBottom: 12 }}>
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <span className="system-label">Checkpoint {String(index + 1).padStart(2, "0")}</span>
+                  <span
+                    style={{
+                      height: 1,
+                      width: 30,
+                      background: "linear-gradient(90deg, rgba(154,223,255,0.56), transparent)",
+                    }}
+                  />
+                </div>
+                <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", opacity: 0.86, marginBottom: 10 }}>
                   {milestone.month}
                 </p>
-                <h3 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.35rem, 4.8vw, 1.75rem)", fontWeight: 650, lineHeight: 1.08, marginBottom: 12 }}>
+                <h3 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.25rem, 2.2vw, 1.58rem)", fontWeight: 650, lineHeight: 1.06, marginBottom: 10 }}>
                   {milestone.title}
                 </h3>
-                <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.64)", fontSize: "clamp(1rem, 3.8vw, 1.16rem)", fontWeight: 500, lineHeight: 1.36 }}>
+                <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.62)", fontSize: "1rem", fontWeight: 500, lineHeight: 1.34 }}>
                   {milestone.description}
                 </p>
-                {milestone.locked ? (
-                  <div className="mt-3 h-px w-8" style={{ background: "rgba(212,168,83,0.32)" }} />
-                ) : null}
               </article>
             );
           })}
+        </div>
+
+        <div
+          className="absolute left-1/2 top-[48vh] z-6 w-[min(88vw,390px)] -translate-x-1/2 -translate-y-1/2 pointer-events-none md:hidden"
+          style={{ opacity: showMilestones ? activeVisible : 0, transition: "opacity 0.8s ease" }}
+        >
+          <article
+            key={activeMilestone.id}
+            className="rounded-[22px] px-5 py-5 text-left backdrop-blur-md sci-panel"
+            style={{
+              transform: `translateY(${18 - activeVisible * 18}px)`,
+              background:
+                "linear-gradient(145deg, rgba(8,13,30,0.84), rgba(12,18,40,0.68), rgba(13,28,46,0.54))",
+              border: "1px solid rgba(154,223,255,0.3)",
+              boxShadow: "0 14px 54px rgba(0,0,0,0.34), 0 0 34px rgba(103,243,255,0.12), 0 0 26px rgba(212,168,83,0.1)",
+            }}
+          >
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <span className="system-label">Checkpoint {String(activeIndex + 1).padStart(2, "0")}</span>
+                <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", opacity: 0.86, marginTop: 8 }}>
+                  {activeMilestone.month}
+                </p>
+              </div>
+              <div className="flex gap-1.5 pt-1">
+                {journeyToJanuaryMilestones.map((milestone, index) => (
+                  <span
+                    key={milestone.id}
+                    className="block h-1.5 rounded-full"
+                    style={{
+                      width: index === activeIndex ? 18 : 6,
+                      background:
+                        index === activeIndex
+                          ? "rgba(212,168,83,0.86)"
+                          : index < activeIndex
+                            ? "rgba(154,223,255,0.5)"
+                            : "rgba(245,230,200,0.18)",
+                      boxShadow: index === activeIndex ? "0 0 12px rgba(212,168,83,0.24)" : "none",
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+            <h3 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.62rem, 7vw, 2.05rem)", fontWeight: 650, lineHeight: 1.04, marginBottom: 12 }}>
+              {activeMilestone.title}
+            </h3>
+            <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.66)", fontSize: "clamp(1.04rem, 4vw, 1.16rem)", fontWeight: 500, lineHeight: 1.38 }}>
+              {activeMilestone.description}
+            </p>
+          </article>
         </div>
 
         <div
