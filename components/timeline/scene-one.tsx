@@ -171,10 +171,10 @@ export function SceneOne() {
           style={{ opacity: showOpeningText ? 1 : 0 }}
           className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none z-6 top-[30vh] transition-opacity duration-1000 ease-linear w-[90vw] flex flex-col gap-2.5 items-center"
         >
-          <p className="font-jost tracking-widest text-warm-gold uppercase mb-2 opacity-70">
+          <p className="chapter-kicker text-warm-gold mb-2 opacity-70">
             Chapter I
           </p>
-          <h2 className="leading-[1.2] font-cormorant font-bold tracking-wide text-[clamp(1.8rem,4vw,4rem)] text-foreground">
+          <h2 className="chapter-heading text-foreground">
             {event.chapter}
           </h2>
           {/* <div className="w-15 h-px bg-warm-gold my-3.5 mx-auto opacity-50" /> */}
@@ -191,7 +191,7 @@ export function SceneOne() {
             transform: `translateY(${showMeetText ? 0 : 12}px)`,
           }}
         >
-          <p className="font-cormorant text-[clamp(1.2rem,2.5vw,3rem)] italic font-light text-foreground tracking-[0.04em] leading-[1.6] opacity-85">
+          <p className="story-copy italic text-foreground tracking-[0.04em] opacity-85">
             {event.title}
           </p>
         </div>
@@ -204,11 +204,11 @@ export function SceneOne() {
             transform: `translateY(${showRevealText ? 0 : 16}px)`,
           }}
         >
-          <p className="font-jost font-semibold text-[0.6rem] tracking-[0.35em] text-warm-gold uppercase mb-4 opacity-80">
+          <p className="reveal-kicker text-warm-gold mb-4 opacity-80">
             {event.date}
           </p>
 
-          <h3 className="font-cormorant text-[clamp(1.6rem,3.5vw,2.6rem)] font-light text-foreground tracking-[0.04em] leading-[1.3] mb-5">
+          <h3 className="reveal-heading text-foreground mb-5">
             {event.description}
           </h3>
 

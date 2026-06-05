@@ -1,6 +1,7 @@
 "use client";
 
 import { StarField } from "./star-field";
+import { SciFiAtmosphere } from "./sci-fi-atmosphere";
 import { SceneOne } from "./scene-one";
 import { SceneTwo } from "./scene-two";
 import { SceneThree } from "./scene-three";
@@ -14,6 +15,7 @@ export function TimelinePage() {
     <main style={{ position: "relative", background: "var(--night)" }}>
       {/* Stars are fixed behind everything — they never scroll */}
       <StarField />
+      <SciFiAtmosphere />
 
       {/* Scene 1: Two Trajectories Intersect — Dec 31, 2025 */}
       <SceneOne />
