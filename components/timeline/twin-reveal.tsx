@@ -24,7 +24,7 @@ export function TwinReveal({ progress }: TwinRevealProps) {
       aria-hidden="true"
     >
       <div
-        className="relative aspect-[4/3] w-[min(88vw,390px)] overflow-hidden rounded-[20px] sci-panel md:w-[min(78vw,500px)] md:rounded-[24px]"
+        className="relative aspect-4/3 w-[min(88vw,390px)] overflow-hidden rounded-[20px] sci-panel md:w-[min(78vw,500px)] md:rounded-3xl"
         style={{
           transform: `scale(${0.88 + reveal * 0.12})`,
           transformOrigin: "center",
