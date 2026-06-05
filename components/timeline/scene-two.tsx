@@ -122,6 +122,11 @@ export function SceneTwo() {
   // Parallax offsets
   const bgParallax  = progress * -30;
   const midParallax = progress * -55;
+  const activeMobileMemoryIndex = MEMORIES.reduce(
+    (activeIndex, memory, index) => (progress >= memory.threshold - 0.04 ? index : activeIndex),
+    -1
+  );
+  const activeMobileMemory = activeMobileMemoryIndex >= 0 ? MEMORIES[activeMobileMemoryIndex] : null;
 
   return (
     <div ref={containerRef} style={{ height: "400vh", position: "relative" }}>
@@ -244,29 +249,63 @@ export function SceneTwo() {
         </div>
 
         {/* ── LAYER 5: Memory cards ── */}
-        {MEMORIES.map((m, index) => {
-          const mobilePosition: React.CSSProperties = {
-            top: `${30 + index * 10.5}vh`,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "min(86vw, 310px)",
-            maxWidth: "310px",
-          };
-
-          return (
+        {isMobile && activeMobileMemory ? (
+          <div
+            className="absolute left-1/2 top-[49vh] z-5 w-[min(88vw,330px)] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ transition: "none" }}
+          >
             <MemoryCard
-              key={m.id}
-              label={m.label}
-              date={m.date}
-              icon={m.icon}
-              entryFrom={isMobile ? "bottom" : m.entryFrom}
-              threshold={m.threshold}
-              exitThreshold={isMobile ? m.threshold + 0.34 : undefined}
+              key={activeMobileMemory.id}
+              label={activeMobileMemory.label}
+              date={activeMobileMemory.date}
+              icon={activeMobileMemory.icon}
+              entryFrom="bottom"
+              threshold={activeMobileMemory.threshold}
               progress={progress}
-              positionStyle={isMobile ? mobilePosition : m.positionStyle}
+              positionStyle={{
+                position: "relative",
+                left: "auto",
+                top: "auto",
+                width: "100%",
+                minWidth: "0",
+                maxWidth: "none",
+              }}
             />
-          );
-        })}
+            <div className="mt-3 flex justify-center gap-1.5">
+              {MEMORIES.map((memory, index) => (
+                <span
+                  key={memory.id}
+                  className="block h-1.5 rounded-full"
+                  style={{
+                    width: index === activeMobileMemoryIndex ? 18 : 6,
+                    background:
+                      index === activeMobileMemoryIndex
+                        ? "rgba(212,168,83,0.86)"
+                        : index < activeMobileMemoryIndex
+                          ? "rgba(154,223,255,0.48)"
+                          : "rgba(245,230,200,0.18)",
+                    boxShadow: index === activeMobileMemoryIndex ? "0 0 12px rgba(212,168,83,0.24)" : "none",
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        {!isMobile
+          ? MEMORIES.map((m) => (
+              <MemoryCard
+                key={m.id}
+                label={m.label}
+                date={m.date}
+                icon={m.icon}
+                entryFrom={m.entryFrom}
+                threshold={m.threshold}
+                progress={progress}
+                positionStyle={m.positionStyle}
+              />
+            ))
+          : null}
 
         {/* ── TEXT: Chapter label ── */}
         <div
