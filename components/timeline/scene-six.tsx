@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { journeyToJanuaryMilestones } from "@/data/timeline-events";
+import { useIsMobile } from "./use-is-mobile";
 
 export function SceneSix() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,45 +128,47 @@ export function SceneSix() {
           className="absolute left-1/2 top-[8vh] z-6 w-[min(620px,88vw)] -translate-x-1/2 text-center pointer-events-none"
           style={{ opacity: showOpening ? 1 : 0, transition: "opacity 0.9s ease" }}
         >
-          <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.6rem", letterSpacing: "0.4em", opacity: 0.72, marginBottom: 10 }}>
+          <p className="chapter-kicker" style={{ color: "var(--warm-gold)", opacity: 0.72, marginBottom: 10 }}>
             Chapter VI
           </p>
-          <h2 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 300, letterSpacing: "0.05em", lineHeight: 1.2 }}>
+          <h2 className="chapter-heading" style={{ color: "var(--champagne)" }}>
             Countdown To January
           </h2>
-          <p className="font-cormorant italic" style={{ color: "var(--champagne)", opacity: 0.42, fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", marginTop: 12 }}>
+          <p className="chapter-date italic" style={{ color: "var(--champagne)", opacity: 0.42, marginTop: 12 }}>
             June 2026 to January 2027
           </p>
         </div>
 
         <div
-          className="absolute left-1/2 top-[16vh] z-5 grid w-[min(92vw,980px)] -translate-x-1/2 gap-3 pointer-events-none md:grid-cols-7"
+          className="absolute left-1/2 top-[25vh] z-5 grid w-[min(90vw,410px)] -translate-x-1/2 gap-3 pointer-events-none md:top-[16vh] md:w-[min(94vw,1120px)] md:grid-cols-7"
           style={{ opacity: showMilestones ? 1 : 0, transition: "opacity 0.8s ease" }}
         >
           {journeyToJanuaryMilestones.map((milestone, index) => {
             const visible = Math.max(0, Math.min(1, (progress - (0.13 + index * 0.105)) / 0.08));
             const isActive = index === activeIndex;
+            const cardVisible = isMobile ? (isActive ? 1 : 0) : visible;
 
             return (
               <article
                 key={milestone.id}
-                className="rounded-xl px-3 py-3 backdrop-blur-md"
+                className="rounded-xl px-5 py-5 backdrop-blur-md md:px-4 md:py-4"
                 style={{
-                  opacity: visible,
-                  transform: `translateY(${18 - visible * 18}px)`,
+                  display: isMobile && !isActive ? "none" : undefined,
+                  opacity: cardVisible,
+                  transform: `translateY(${18 - cardVisible * 18}px)`,
                   background: isActive ? "rgba(12,18,40,0.68)" : "rgba(12,18,40,0.46)",
                   border: `1px solid rgba(212,168,83,${isActive ? 0.34 : 0.16})`,
                   boxShadow: isActive ? "0 10px 36px rgba(0,0,0,0.28), 0 0 28px rgba(212,168,83,0.12)" : "none",
-                  minHeight: "148px",
+                  minHeight: isMobile ? "220px" : "190px",
                 }}
               >
-                <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.5rem", letterSpacing: "0.22em", opacity: 0.76, marginBottom: 9 }}>
+                <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", opacity: 0.82, marginBottom: 12 }}>
                   {milestone.month}
                 </p>
-                <h3 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1rem, 1.8vw, 1.25rem)", fontWeight: 400, lineHeight: 1.15, marginBottom: 9 }}>
+                <h3 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.35rem, 4.8vw, 1.75rem)", fontWeight: 650, lineHeight: 1.08, marginBottom: 12 }}>
                   {milestone.title}
                 </h3>
-                <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.54)", fontSize: "0.86rem", lineHeight: 1.35 }}>
+                <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.64)", fontSize: "clamp(1rem, 3.8vw, 1.16rem)", fontWeight: 500, lineHeight: 1.36 }}>
                   {milestone.description}
                 </p>
                 {milestone.locked ? (
@@ -176,10 +180,10 @@ export function SceneSix() {
         </div>
 
         <div
-          className="absolute bottom-[8vh] left-1/2 z-6 w-[min(720px,90vw)] -translate-x-1/2 text-center pointer-events-none"
+          className="absolute bottom-[8vh] left-1/2 z-6 hidden w-[min(720px,90vw)] -translate-x-1/2 text-center pointer-events-none md:block"
           style={{ opacity: progress > 0.82 ? 1 : 0, transform: `translateY(${progress > 0.82 ? 0 : 18}px)`, transition: "opacity 1s ease, transform 1s ease" }}
         >
-          <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.66)", fontSize: "clamp(1.1rem, 2.5vw, 1.55rem)", lineHeight: 1.55, letterSpacing: "0.03em" }}>
+          <p className="story-copy italic" style={{ color: "rgba(245,230,200,0.66)", letterSpacing: "0.03em" }}>
             The path kept moving, now with room for everything still waiting to be remembered.
           </p>
         </div>

@@ -117,35 +117,43 @@ export function SceneSeven() {
           className="absolute left-1/2 top-[9vh] z-6 w-[min(660px,88vw)] -translate-x-1/2 text-center pointer-events-none"
           style={{ opacity: showOpening ? 1 : 0, transition: "opacity 0.9s ease" }}
         >
-          <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.6rem", letterSpacing: "0.4em", opacity: 0.72, marginBottom: 10 }}>
+          <p className="chapter-kicker" style={{ color: "var(--warm-gold)", opacity: 0.72, marginBottom: 10 }}>
             Chapter VII
           </p>
-          <h2 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.9rem, 4.5vw, 3.4rem)", fontWeight: 300, letterSpacing: "0.05em", lineHeight: 1.15 }}>
+          <h2 className="chapter-heading" style={{ color: "var(--champagne)" }}>
             {event.date}
           </h2>
-          <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.58)", fontSize: "clamp(1rem, 2vw, 1.2rem)", marginTop: 12 }}>
+          <p className="chapter-date italic" style={{ color: "rgba(245,230,200,0.58)", marginTop: 12 }}>
             The beginning of everything.
           </p>
         </div>
 
         <div
-          className="absolute left-1/2 top-[48vh] z-5 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          style={{ opacity: showCountdown ? 1 : 0, transform: `translate(-50%, -50%) scale(${showCountdown ? 1 : 0.94})`, transition: "opacity 1s ease, transform 1s ease" }}
+          className="absolute left-1/2 top-1/2 z-5 pointer-events-none"
+          style={{ opacity: showCountdown ? 1 : 0, transform: "translate(-50%, -50%)", transition: "opacity 1s ease" }}
         >
-          <CountdownToArrival progress={arrivalGlow} />
+          <div
+            style={{
+              transform: `scale(${showCountdown ? 1 : 0.94})`,
+              transformOrigin: "center",
+              transition: "transform 1s ease",
+            }}
+          >
+            <CountdownToArrival progress={arrivalGlow} />
+          </div>
         </div>
 
         <div
           className="absolute bottom-[8vh] left-1/2 z-6 w-[min(720px,90vw)] -translate-x-1/2 text-center pointer-events-none"
           style={{ opacity: showFinal ? 1 : 0, transform: `translateY(${showFinal ? 0 : 18}px)`, transition: "opacity 1.1s ease, transform 1.1s ease" }}
         >
-          <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.58rem", letterSpacing: "0.35em", opacity: 0.78, marginBottom: 16 }}>
+          <p className="reveal-kicker" style={{ color: "var(--warm-gold)", opacity: 0.78, marginBottom: 16 }}>
             {event.title}
           </p>
-          <h3 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.7rem, 3.8vw, 3rem)", fontWeight: 300, lineHeight: 1.25, letterSpacing: "0.04em" }}>
+          <h3 className="reveal-heading" style={{ color: "var(--champagne)" }}>
             The beginning of everything.
           </h3>
-          <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.62)", fontSize: "clamp(1rem, 2.1vw, 1.28rem)", lineHeight: 1.6, margin: "14px auto 0", maxWidth: 520 }}>
+          <p className="story-copy italic" style={{ color: "rgba(245,230,200,0.62)", margin: "14px auto 0", maxWidth: 560 }}>
             {event.description}
           </p>
         </div>

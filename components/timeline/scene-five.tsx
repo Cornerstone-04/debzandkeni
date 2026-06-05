@@ -137,13 +137,13 @@ export function SceneFive() {
           className="absolute left-1/2 top-[10vh] z-6 w-[min(620px,88vw)] -translate-x-1/2 text-center pointer-events-none"
           style={{ opacity: showOpening ? 1 : 0, transition: "opacity 0.9s ease" }}
         >
-          <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.6rem", letterSpacing: "0.4em", opacity: 0.72, marginBottom: 10 }}>
+          <p className="chapter-kicker" style={{ color: "var(--warm-gold)", opacity: 0.72, marginBottom: 10 }}>
             Chapter V
           </p>
-          <h2 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 300, letterSpacing: "0.05em", lineHeight: 1.2 }}>
+          <h2 className="chapter-heading" style={{ color: "var(--champagne)" }}>
             {event.chapter}
           </h2>
-          <p className="font-cormorant italic" style={{ color: "var(--champagne)", opacity: 0.42, fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", marginTop: 12 }}>
+          <p className="chapter-date italic" style={{ color: "var(--champagne)", opacity: 0.42, marginTop: 12 }}>
             {event.date}
           </p>
         </div>
@@ -152,13 +152,13 @@ export function SceneFive() {
           className="absolute left-1/2 top-[74vh] z-6 w-[min(700px,90vw)] -translate-x-1/2 text-center pointer-events-none"
           style={{ opacity: showRevealText ? 1 : 0, transform: `translateY(${showRevealText ? 0 : 18}px)`, transition: "opacity 1.1s ease, transform 1.1s ease" }}
         >
-          <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.58rem", letterSpacing: "0.35em", opacity: 0.8, marginBottom: 12 }}>
+          <p className="reveal-kicker" style={{ color: "var(--warm-gold)", opacity: 0.8, marginBottom: 12 }}>
             {event.date}
           </p>
-          <h3 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.8rem, 4vw, 3.2rem)", fontWeight: 300, lineHeight: 1.2, letterSpacing: "0.05em" }}>
+          <h3 className="reveal-heading" style={{ color: "var(--champagne)" }}>
             The future doubled.
           </h3>
-          <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.62)", fontSize: "clamp(1rem, 2vw, 1.25rem)", lineHeight: 1.55, margin: "14px auto 0", maxWidth: 520 }}>
+          <p className="story-copy italic" style={{ color: "rgba(245,230,200,0.62)", margin: "14px auto 0", maxWidth: 520 }}>
             One journey became two new paths.
           </p>
         </div>

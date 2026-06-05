@@ -83,6 +83,54 @@
   }
 }
 
+@layer components {
+  .chapter-kicker {
+    font-family: var(--font-jost);
+    font-size: clamp(0.68rem, 1.7vw, 0.82rem) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.34em !important;
+    text-transform: uppercase;
+  }
+
+  .chapter-heading {
+    font-family: var(--font-cormorant-garamond);
+    font-size: clamp(2.25rem, 9vw, 4.25rem) !important;
+    font-weight: 650 !important;
+    letter-spacing: 0.025em !important;
+    line-height: 1.04 !important;
+  }
+
+  .chapter-date {
+    font-family: var(--font-cormorant-garamond);
+    font-size: clamp(1.08rem, 3.2vw, 1.35rem) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.035em !important;
+  }
+
+  .reveal-kicker {
+    font-family: var(--font-jost);
+    font-size: clamp(0.66rem, 1.8vw, 0.82rem) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.3em !important;
+    text-transform: uppercase;
+  }
+
+  .reveal-heading {
+    font-family: var(--font-cormorant-garamond);
+    font-size: clamp(2.1rem, 8vw, 3.65rem) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+    line-height: 1.1 !important;
+  }
+
+  .story-copy {
+    font-family: var(--font-cormorant-garamond);
+    font-size: clamp(1.12rem, 4.2vw, 1.48rem) !important;
+    font-weight: 500 !important;
+    line-height: 1.45 !important;
+  }
+}
+
 @keyframes scrollPulse {
   0%,
   100% {

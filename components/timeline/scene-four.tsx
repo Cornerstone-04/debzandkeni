@@ -158,13 +158,13 @@ export function SceneFour() {
           className="absolute left-1/2 top-[10vh] z-6 w-[min(620px,88vw)] -translate-x-1/2 text-center pointer-events-none"
           style={{ opacity: showOpening ? 1 : 0, transition: "opacity 0.9s ease" }}
         >
-          <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.6rem", letterSpacing: "0.4em", opacity: 0.72, marginBottom: 10 }}>
+          <p className="chapter-kicker" style={{ color: "var(--warm-gold)", opacity: 0.72, marginBottom: 10 }}>
             Chapter IV
           </p>
-          <h2 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 300, letterSpacing: "0.05em", lineHeight: 1.2 }}>
+          <h2 className="chapter-heading" style={{ color: "var(--champagne)" }}>
             {event.chapter}
           </h2>
-          <p className="font-cormorant italic" style={{ color: "var(--champagne)", opacity: 0.42, fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", marginTop: 12 }}>
+          <p className="chapter-date italic" style={{ color: "var(--champagne)", opacity: 0.42, marginTop: 12 }}>
             {event.date}
           </p>
         </div>
@@ -173,7 +173,7 @@ export function SceneFour() {
           className="absolute left-1/2 top-[13vh] z-6 w-[min(560px,88vw)] -translate-x-1/2 text-center pointer-events-none"
           style={{ opacity: showAnticipation ? 1 : 0, transform: `translateY(${showAnticipation ? 0 : 12}px)`, transition: "opacity 0.9s ease, transform 0.9s ease" }}
         >
-          <p className="font-cormorant italic" style={{ color: "rgba(245,230,200,0.68)", fontSize: "clamp(1.2rem, 3vw, 2rem)", lineHeight: 1.55, letterSpacing: "0.04em" }}>
+          <p className="story-copy italic" style={{ color: "rgba(245,230,200,0.68)", letterSpacing: "0.04em" }}>
             Something in the timeline began to answer back.
           </p>
         </div>
@@ -182,10 +182,10 @@ export function SceneFour() {
           className="absolute left-1/2 top-[11vh] z-6 w-[min(680px,90vw)] -translate-x-1/2 text-center pointer-events-none"
           style={{ opacity: showReveal ? 1 : 0, transform: `translateY(${showReveal ? 0 : 16}px)`, transition: "opacity 1.1s ease, transform 1.1s ease" }}
         >
-          <p className="font-jost uppercase" style={{ color: "var(--warm-gold)", fontSize: "0.58rem", letterSpacing: "0.35em", opacity: 0.8, marginBottom: 16 }}>
+          <p className="reveal-kicker" style={{ color: "var(--warm-gold)", opacity: 0.8, marginBottom: 16 }}>
             {event.date}
           </p>
-          <h3 className="font-cormorant" style={{ color: "var(--champagne)", fontSize: "clamp(1.7rem, 3.5vw, 2.8rem)", fontWeight: 300, lineHeight: 1.35, letterSpacing: "0.04em" }}>
+          <h3 className="reveal-heading" style={{ color: "var(--champagne)" }}>
             One small test changed the shape of the future.
           </h3>
         </div>

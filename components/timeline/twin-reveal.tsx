@@ -1,31 +1,37 @@
 "use client";
 
+import { useIsMobile } from "./use-is-mobile";
+
 type TwinRevealProps = {
   progress: number;
 };
 
 export function TwinReveal({ progress }: TwinRevealProps) {
+  const isMobile = useIsMobile();
   const reveal = Math.max(0, Math.min(1, (progress - 0.18) / 0.3));
   const split = Math.max(0, Math.min(1, (progress - 0.48) / 0.28));
   const glow = 0.18 + reveal * 0.3;
+  const splitDistance = isMobile ? 30 : 42;
 
   return (
     <div
-      className="absolute left-1/2 top-[42vh] z-5 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+      className="absolute left-1/2 top-1/2 z-5 pointer-events-none md:top-[42vh]"
       style={{
         opacity: reveal,
-        transform: `translate(-50%, -50%) scale(${0.88 + reveal * 0.12})`,
+        transform: "translate(-50%, -50%)",
         transition: "none",
       }}
       aria-hidden="true"
     >
       <div
-        className="relative w-[min(76vw,430px)] aspect-[4/3] rounded-[22px] overflow-hidden"
+        className="relative aspect-[4/3] w-[min(88vw,390px)] overflow-hidden rounded-[20px] md:w-[min(78vw,500px)] md:rounded-[24px]"
         style={{
+          transform: `scale(${0.88 + reveal * 0.12})`,
+          transformOrigin: "center",
           background:
             "linear-gradient(145deg, rgba(245,230,200,0.1), rgba(12,18,40,0.72) 42%, rgba(8,11,26,0.92))",
           border: "1px solid rgba(240,201,122,0.28)",
-          boxShadow: `0 0 ${44 + reveal * 70}px rgba(212,168,83,${glow}), inset 0 1px 0 rgba(245,230,200,0.12)`,
+          boxShadow: `0 0 ${isMobile ? 28 + reveal * 42 : 44 + reveal * 70}px rgba(212,168,83,${glow}), inset 0 1px 0 rgba(245,230,200,0.12)`,
         }}
       >
         <svg viewBox="0 0 480 360" className="absolute inset-0 h-full w-full">
@@ -55,7 +61,7 @@ export function TwinReveal({ progress }: TwinRevealProps) {
             fill="none"
           />
 
-          <g transform={`translate(${-42 * split} 0)`}>
+          <g transform={`translate(${-splitDistance * split} 0)`}>
             <ellipse
               cx="218"
               cy="183"
@@ -73,7 +79,7 @@ export function TwinReveal({ progress }: TwinRevealProps) {
             />
           </g>
 
-          <g transform={`translate(${42 * split} 0)`}>
+          <g transform={`translate(${splitDistance * split} 0)`}>
             <ellipse
               cx="262"
               cy="184"
@@ -101,15 +107,16 @@ export function TwinReveal({ progress }: TwinRevealProps) {
         </svg>
 
         <div
-          className="absolute left-4 right-4 top-3 flex items-center justify-between font-jost uppercase"
+          className="absolute left-3 right-3 top-3 flex items-center justify-between gap-3 font-jost uppercase md:left-4 md:right-4"
           style={{
             color: "rgba(240,201,122,0.62)",
-            fontSize: "0.55rem",
-            letterSpacing: "0.28em",
+            fontSize: isMobile ? "0.58rem" : "0.68rem",
+            fontWeight: 700,
+            letterSpacing: isMobile ? "0.16em" : "0.24em",
           }}
         >
           <span>June 2026</span>
-          <span>Two heartbeats</span>
+          <span style={{ textAlign: "right" }}>Two heartbeats</span>
         </div>
       </div>
     </div>

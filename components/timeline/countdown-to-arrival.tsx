@@ -49,7 +49,7 @@ export function CountdownToArrival({
 
   return (
     <div
-      className="relative w-[min(88vw,520px)] rounded-[22px] px-6 py-7 text-center backdrop-blur-md"
+      className="relative w-[min(92vw,620px)] rounded-[24px] px-6 py-8 text-center backdrop-blur-md md:px-8 md:py-9"
       style={{
         background: "rgba(12,18,40,0.56)",
         border: "1px solid rgba(212,168,83,0.24)",
@@ -62,16 +62,17 @@ export function CountdownToArrival({
         className="font-jost uppercase"
         style={{
           color: "var(--warm-gold)",
-          fontSize: "0.58rem",
-          letterSpacing: "0.35em",
-          opacity: 0.76,
-          marginBottom: "18px",
+          fontSize: "0.72rem",
+          fontWeight: 700,
+          letterSpacing: "0.28em",
+          opacity: 0.82,
+          marginBottom: "22px",
         }}
       >
         Countdown to January
       </p>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-3 md:gap-4">
         {[
           { value: months, label: "months" },
           { value: weeks, label: "weeks" },
@@ -79,7 +80,7 @@ export function CountdownToArrival({
         ].map((item) => (
           <div
             key={item.label}
-            className="rounded-xl px-3 py-4"
+            className="rounded-xl px-3 py-5 md:px-4 md:py-6"
             style={{
               background: "rgba(245,230,200,0.055)",
               border: "1px solid rgba(245,230,200,0.08)",
@@ -89,8 +90,8 @@ export function CountdownToArrival({
               className="font-cormorant"
               style={{
                 color: "var(--champagne)",
-                fontSize: "clamp(2rem, 8vw, 4.2rem)",
-                fontWeight: 300,
+                fontSize: "clamp(2.25rem, 10vw, 5rem)",
+                fontWeight: 650,
                 lineHeight: 1,
               }}
             >
@@ -100,9 +101,10 @@ export function CountdownToArrival({
               className="font-jost uppercase"
               style={{
                 color: "rgba(245,230,200,0.5)",
-                fontSize: "0.52rem",
-                letterSpacing: "0.22em",
-                marginTop: "8px",
+                fontSize: "0.64rem",
+                fontWeight: 700,
+                letterSpacing: "0.18em",
+                marginTop: "10px",
               }}
             >
               {item.label}
@@ -115,11 +117,12 @@ export function CountdownToArrival({
         className="font-cormorant italic"
         style={{
           color: "rgba(245,230,200,0.6)",
-          fontSize: "clamp(1rem, 2.4vw, 1.25rem)",
+          fontSize: "clamp(1.12rem, 4.2vw, 1.45rem)",
+          fontWeight: 500,
           letterSpacing: "0.03em",
-          lineHeight: 1.55,
-          margin: "20px auto 0",
-          maxWidth: "360px",
+          lineHeight: 1.45,
+          margin: "24px auto 0",
+          maxWidth: "460px",
         }}
       >
         Soon this space can hold names, photos, times, weights, and the first details of two new lives.

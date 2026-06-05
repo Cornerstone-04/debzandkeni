@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { MemoryCard } from "./memory-card";
 import { timelineEvents } from "@/data/timeline-events";
+import { useIsMobile } from "./use-is-mobile";
+import { CharacterSilhouette } from "./character-silhouette";
 
 // ──────────────────────────────────────────────────────────────────────────────
 // SceneThree — "Love In Motion"
@@ -35,7 +37,7 @@ const MEMORIES = [
     icon: "🌧",
     entryFrom: "left" as const,
     threshold: 0.17,
-    positionStyle: { top: "18vh", left: "5vw" },
+    positionStyle: { top: "16vh", left: "3vw" },
   },
   {
     id: "feb-cook",
@@ -44,7 +46,7 @@ const MEMORIES = [
     icon: "🍳",
     entryFrom: "right" as const,
     threshold: 0.24,
-    positionStyle: { top: "42vh", right: "6vw" },
+    positionStyle: { top: "36vh", right: "3vw" },
   },
   {
     id: "mar-trip",
@@ -53,7 +55,7 @@ const MEMORIES = [
     icon: "✈️",
     entryFrom: "left" as const,
     threshold: 0.34,
-    positionStyle: { top: "26vh", left: "7vw" },
+    positionStyle: { top: "58vh", left: "4vw" },
   },
   {
     id: "mar-late",
@@ -62,7 +64,7 @@ const MEMORIES = [
     icon: "🌅",
     entryFrom: "right" as const,
     threshold: 0.42,
-    positionStyle: { top: "55vh", right: "5vw" },
+    positionStyle: { top: "18vh", right: "4vw" },
   },
   {
     id: "apr-fight",
@@ -71,7 +73,7 @@ const MEMORIES = [
     icon: "🤝",
     entryFrom: "bottom" as const,
     threshold: 0.50,
-    positionStyle: { top: "35vh", left: "50%", transform: "translateX(-50%)" },
+    positionStyle: { top: "40vh", left: "50%", transform: "translateX(-50%)" },
   },
   {
     id: "apr-family",
@@ -80,7 +82,7 @@ const MEMORIES = [
     icon: "🏡",
     entryFrom: "left" as const,
     threshold: 0.58,
-    positionStyle: { top: "20vh", left: "6vw" },
+    positionStyle: { top: "70vh", left: "5vw" },
   },
   {
     id: "may-plans",
@@ -89,7 +91,7 @@ const MEMORIES = [
     icon: "🗺",
     entryFrom: "right" as const,
     threshold: 0.66,
-    positionStyle: { top: "48vh", right: "6vw" },
+    positionStyle: { top: "56vh", right: "5vw" },
   },
   {
     id: "may-quiet",
@@ -98,7 +100,7 @@ const MEMORIES = [
     icon: "🕯",
     entryFrom: "left" as const,
     threshold: 0.73,
-    positionStyle: { top: "62vh", left: "7vw" },
+    positionStyle: { top: "28vh", left: "4vw" },
   },
 ];
 
@@ -108,6 +110,7 @@ const MONTHS = ["February", "March", "April", "May"];
 export function SceneThree() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -321,18 +324,29 @@ export function SceneThree() {
         </div>
 
         {/* ── LAYER 5: Memory cards ── */}
-        {MEMORIES.map((m) => (
-          <MemoryCard
-            key={m.id}
-            label={m.label}
-            date={m.date}
-            icon={m.icon}
-            entryFrom={m.entryFrom}
-            threshold={m.threshold}
-            progress={progress}
-            positionStyle={m.positionStyle}
-          />
-        ))}
+        {MEMORIES.map((m, index) => {
+          const mobilePosition: React.CSSProperties = {
+            top: index % 2 === 0 ? "28vh" : "56vh",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "min(86vw, 320px)",
+            maxWidth: "320px",
+          };
+
+          return (
+            <MemoryCard
+              key={m.id}
+              label={m.label}
+              date={m.date}
+              icon={m.icon}
+              entryFrom={isMobile ? "bottom" : m.entryFrom}
+              threshold={m.threshold}
+              exitThreshold={m.threshold + (isMobile ? 0.18 : 0.36)}
+              progress={progress}
+              positionStyle={isMobile ? mobilePosition : m.positionStyle}
+            />
+          );
+        })}
 
         {/* ── TEXT: Chapter opening label ── */}
         <div
@@ -346,12 +360,9 @@ export function SceneThree() {
           }}
         >
           <p
+            className="chapter-kicker"
             style={{
-              fontFamily: "var(--font-jost)",
-              fontSize: "0.6rem",
-              letterSpacing: "0.4em",
               color: "var(--warm-gold)",
-              textTransform: "uppercase",
               opacity: 0.7,
               marginBottom: "10px",
             }}
@@ -359,13 +370,9 @@ export function SceneThree() {
             Chapter III
           </p>
           <h2
+            className="chapter-heading"
             style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(1.8rem, 4vw, 3rem)",
-              fontWeight: 300,
               color: "var(--champagne)",
-              letterSpacing: "0.05em",
-              lineHeight: 1.2,
             }}
           >
             {event.chapter}
@@ -380,13 +387,11 @@ export function SceneThree() {
             }}
           />
           <p
+            className="chapter-date"
             style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)",
               fontStyle: "italic",
               color: "var(--champagne)",
               opacity: 0.4,
-              letterSpacing: "0.03em",
             }}
           >
             {event.date}
@@ -438,34 +443,26 @@ export function SceneThree() {
           }}
         >
           <p
+            className="reveal-kicker"
             style={{
-              fontFamily: "var(--font-jost)",
-              fontSize: "0.58rem",
-              letterSpacing: "0.35em",
               color: `rgba(${glowR},${glowG},${glowB},0.85)`,
-              textTransform: "uppercase",
               marginBottom: "16px",
             }}
           >
             {event.date}
           </p>
           <h3
+            className="reveal-heading"
             style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(1.7rem, 3.5vw, 2.8rem)",
-              fontWeight: 300,
               color: "var(--champagne)",
-              letterSpacing: "0.04em",
-              lineHeight: 1.35,
               marginBottom: "18px",
             }}
           >
             {event.title}.
           </h3>
           <p
+            className="story-copy"
             style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(1rem, 2vw, 1.3rem)",
               fontStyle: "italic",
               color: "var(--champagne)",
               opacity: 0.6,
@@ -509,37 +506,13 @@ function JourneyFigure({
   const bob = Math.sin(progress * Math.PI * 5) * 1.5;
   const glowColor = `rgba(${palette.r},${palette.g},${palette.b},0.4)`;
 
-  if (gender === "female") {
-    return (
-      <div style={{ opacity, transform: `translateY(${bob}px)`, filter: `drop-shadow(0 0 10px ${glowColor})` }}>
-        <svg viewBox="0 0 60 120" fill="none" className="w-12 h-24 md:w-14 md:h-28">
-          <circle cx="30" cy="17" r="11" fill="#e8957a" />
-          <path d="M19 15 Q21 5 30 4 Q39 5 41 15 Q38 10 30 10 Q22 10 19 15Z" fill="#7a3b1e" />
-          <path d="M21 28 Q18 38 17 55 Q16 72 18 85 L42 85 Q44 72 43 55 Q42 38 39 28Z" fill="#d4a853" />
-          <path d="M18 85 Q15 100 12 115 L48 115 Q45 100 42 85Z" fill="#c49040" />
-          <path d="M21 33 Q13 44 12 55" stroke="#e8957a" strokeWidth="4" strokeLinecap="round" />
-          {/* Arm reaching toward Keni — right arm slightly raised */}
-          <path d="M39 33 Q50 38 54 46" stroke="#e8957a" strokeWidth="4" strokeLinecap="round" />
-          <rect x="27" y="26" width="6" height="6" rx="2" fill="#e8957a" />
-        </svg>
-      </div>
-    );
-  }
-
   return (
-    <div style={{ opacity, transform: `translateY(${-bob}px)`, filter: `drop-shadow(0 0 10px ${glowColor})` }}>
-      <svg viewBox="0 0 60 120" fill="none" className="w-12 h-24 md:w-14 md:h-28">
-        <circle cx="30" cy="17" r="11" fill="#c8a882" />
-        <path d="M19 13 Q21 4 30 3 Q39 4 41 13 Q38 7 30 7 Q22 7 19 13Z" fill="#2c1a0e" />
-        <path d="M20 28 Q17 38 17 55 L17 87 L43 87 L43 55 Q43 38 40 28Z" fill="#1a2744" />
-        <path d="M26 28 L30 40 L34 28 Q32 33 30 35 Q28 33 26 28Z" fill="#f5e6c8" />
-        <rect x="18" y="85" width="10" height="30" rx="2" fill="#0f1829" />
-        <rect x="32" y="85" width="10" height="30" rx="2" fill="#0f1829" />
-        {/* Left arm reaching toward Debz */}
-        <path d="M20 33 Q8 38 6 46" stroke="#c8a882" strokeWidth="4" strokeLinecap="round" />
-        <path d="M40 33 Q48 44 50 56" stroke="#c8a882" strokeWidth="4" strokeLinecap="round" />
-        <rect x="27" y="26" width="6" height="6" rx="2" fill="#c8a882" />
-      </svg>
+    <div style={{ opacity, transform: `translateY(${gender === "female" ? bob : -bob}px)` }}>
+      <CharacterSilhouette
+        gender={gender}
+        size="medium"
+        glowColor={glowColor}
+      />
     </div>
   );
 }
