@@ -1,34 +1,33 @@
 "use client";
 
 // CountdownClock renders a New Year's Eve clock face.
-// `progress` (0→1) drives the countdown: at 0 it shows 11:59, at 1 it shows 00:00.
-// When progress hits 1 it shows "Happy New Year" with firework bursts.
+// `progress` (0→1) drives a compressed final-minute countdown:
+// at 0 it shows 11:59:59, at 1 it shows 00:00:00.
 
 type CountdownClockProps = {
   progress: number;
 };
 
+function clampProgress(progress: number) {
+  return Math.max(0, Math.min(1, progress));
+}
+
+function padTime(value: number) {
+  return String(value).padStart(2, "0");
+}
+
 export function CountdownClock({ progress }: CountdownClockProps) {
-  // Interpolate from 11:59:59 down to 00:00:00
-  const totalSeconds = Math.floor((1 - progress) * 119); // 119s span
-  const mins = Math.floor(totalSeconds / 60);
-  const secs = totalSeconds % 60;
-  const isStruck = progress >= 0.98;
-
-  const timeString = isStruck
-    ? "00:00"
-    : `${String(11 - (1 - Math.ceil(mins / 60))).padStart(2, "0")}:${String(59 - (59 - mins % 60)).padStart(2, "0")}`;
-
-  // Actually let's keep it simpler: just show 11:5x counting down
-  const displayMins = isStruck ? "00" : String(Math.max(0, Math.floor(59 * (1 - progress)))).padStart(2, "0");
-  const displaySecs = isStruck ? "00" : String(Math.max(0, Math.floor(59 * (1 - (progress % (1/60)) * 60)))).padStart(2, "0");
-
-  const clockOpacity = Math.min(1, progress * 4);
+  const clampedProgress = clampProgress(progress);
+  const isStruck = clampedProgress >= 0.985;
+  const remainingSeconds = isStruck ? 0 : Math.ceil((1 - clampedProgress) * 59);
+  const timeString = isStruck ? "00:00:00" : `11:59:${padTime(remainingSeconds)}`;
+  const clockOpacity = Math.min(1, clampedProgress * 4);
 
   return (
     <div
       className="flex flex-col items-center gap-2"
       style={{ opacity: clockOpacity }}
+      aria-label={`New Year's Eve countdown ${timeString}`}
     >
       {/* Date label */}
       <p
@@ -63,7 +62,7 @@ export function CountdownClock({ progress }: CountdownClockProps) {
         <p
           style={{
             fontFamily: "var(--font-cormorant)",
-            fontSize: isStruck ? "3rem" : "2.5rem",
+            fontSize: isStruck ? "clamp(2.25rem, 8vw, 3rem)" : "clamp(2rem, 7vw, 2.5rem)",
             fontWeight: 300,
             letterSpacing: "0.05em",
             color: isStruck ? "var(--soft-gold)" : "var(--champagne)",
@@ -71,7 +70,7 @@ export function CountdownClock({ progress }: CountdownClockProps) {
             lineHeight: 1,
           }}
         >
-          {isStruck ? "00:00" : `11:${displayMins}`}
+          {timeString}
         </p>
       </div>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { MemoryCard } from "./memory-card";
 import { timelineEvents } from "@/data/timeline-events";
@@ -162,6 +163,9 @@ export function SceneThree() {
   // We represent this as a strokeDashoffset on an SVG path
   const pathLength = 900; // approx SVG units
   const pathDrawn = Math.max(0, Math.min(pathLength, pathLength * (progress - 0.1) / 0.8));
+  const photoReveal = Math.max(0, Math.min(1, (progress - 0.68) / 0.14));
+  const photoHold = Math.max(0, Math.min(1, (0.9 - progress) / 0.1));
+  const photoOpacity = photoReveal * photoHold;
 
   return (
     <div ref={containerRef} style={{ height: "500vh", position: "relative" }}>
@@ -347,6 +351,62 @@ export function SceneThree() {
             />
           );
         })}
+
+        {/* ── LAYER 5B: Real memory photograph ── */}
+        <div
+          className="absolute z-5 pointer-events-none"
+          style={{
+            top: isMobile ? "52vh" : "41vh",
+            left: isMobile ? "50%" : "66vw",
+            opacity: photoOpacity,
+            transform: `translate(-50%, ${22 - photoReveal * 22}px) rotate(${isMobile ? -1 : 2}deg)`,
+            transition: "none",
+          }}
+          aria-hidden="true"
+        >
+          <div
+            className="relative overflow-hidden rounded-[22px] backdrop-blur-md sci-panel"
+            style={{
+              width: isMobile ? "min(82vw, 310px)" : "min(28vw, 340px)",
+              aspectRatio: "0.78",
+              background:
+                "linear-gradient(145deg, rgba(8,13,30,0.78), rgba(12,18,40,0.6), rgba(13,28,46,0.44))",
+              border: "1px solid rgba(154,223,255,0.24)",
+              boxShadow:
+                "0 18px 58px rgba(0,0,0,0.38), 0 0 34px rgba(103,243,255,0.1), 0 0 26px rgba(212,168,83,0.12)",
+            }}
+          >
+            <Image
+              src="/images/debz-and-keni.jpeg"
+              alt=""
+              fill
+              sizes={isMobile ? "82vw" : "28vw"}
+              className="object-cover"
+              style={{
+                objectPosition: "48% 50%",
+                filter: "saturate(0.96) contrast(1.04)",
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(8,13,30,0.05), transparent 45%, rgba(5,6,15,0.28))",
+                mixBlendMode: "multiply",
+              }}
+            />
+            <div className="absolute left-4 right-4 top-4 flex items-center justify-between gap-3">
+              <span className="system-label">Memory captured</span>
+              <span
+                style={{
+                  height: 1,
+                  width: 34,
+                  background: "linear-gradient(90deg, rgba(154,223,255,0.56), transparent)",
+                }}
+              />
+            </div>
+          </div>
+        </div>
 
         {/* ── TEXT: Chapter opening label ── */}
         <div
