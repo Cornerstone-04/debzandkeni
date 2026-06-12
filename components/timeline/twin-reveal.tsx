@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useIsMobile } from "./use-is-mobile";
 
 type TwinRevealProps = {
@@ -36,6 +37,28 @@ export function TwinReveal({ progress }: TwinRevealProps) {
           }), 0 0 ${24 + reveal * 46}px rgba(212,168,83,0.12), inset 0 1px 0 rgba(245,230,200,0.12)`,
         }}
       >
+        <Image
+          src="/images/twins-ultrasound.jpeg"
+          alt=""
+          fill
+          sizes={isMobile ? "88vw" : "500px"}
+          className="object-contain"
+          style={{
+            zIndex: 1,
+            background: "rgba(0,0,0,0.92)",
+            opacity: 0.28 + reveal * 0.62,
+            filter: `contrast(${1.02 + reveal * 0.08}) brightness(${0.82 + reveal * 0.1}) saturate(0.9)`,
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            zIndex: 2,
+            background:
+              "radial-gradient(ellipse at 50% 48%, transparent 34%, rgba(8,11,26,0.28) 76%), linear-gradient(180deg, rgba(154,223,255,0.08), transparent 34%, rgba(8,11,26,0.1))",
+            mixBlendMode: "screen",
+          }}
+        />
         <svg viewBox="0 0 480 360" className="absolute inset-0 h-full w-full">
           <defs>
             <radialGradient id="ultrasoundGlow" cx="50%" cy="50%" r="58%">
@@ -48,8 +71,8 @@ export function TwinReveal({ progress }: TwinRevealProps) {
             </filter>
           </defs>
 
-          <rect width="480" height="360" fill="rgba(5,6,15,0.42)" />
-          <ellipse cx="240" cy="184" rx="172" ry="116" fill="url(#ultrasoundGlow)" />
+          <rect width="480" height="360" fill="rgba(5,6,15,0.2)" />
+          <ellipse cx="240" cy="184" rx="172" ry="116" fill="url(#ultrasoundGlow)" opacity="0.65" />
           <path
             d="M94 190 C128 116 185 86 242 98 C301 111 357 144 392 206"
             stroke="rgba(245,230,200,0.16)"
@@ -111,6 +134,7 @@ export function TwinReveal({ progress }: TwinRevealProps) {
         <div
           className="absolute left-3 right-3 top-3 flex items-center justify-between gap-3 font-jost uppercase md:left-4 md:right-4"
           style={{
+            zIndex: 3,
             color: "rgba(154,223,255,0.68)",
             fontSize: isMobile ? "0.58rem" : "0.68rem",
             fontWeight: 700,
